@@ -7,5 +7,6 @@
 
 ## Notes
 
-* Go is **NOT** an object-oriented programming language
+* Range Syntax
+  * slice[startIndexIncluding:upToNotIncluding]
 * 
