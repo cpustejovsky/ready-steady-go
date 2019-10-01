@@ -14,4 +14,7 @@ func main() {
 	hand.print()
 	spacer()
 	remainingDeck.print()
+	stringCards := cards.deckToString()
+	fmt.Println(stringCards)
+	cards.saveToFile("test.txt")
 }
