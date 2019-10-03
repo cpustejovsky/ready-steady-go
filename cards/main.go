@@ -10,6 +10,8 @@ func spacer() {
 
 func main() {
 	deck := newDeckFromFile("test")
-	deck.shuffle()
-	fmt.Println(deck)
+	// deck.shuffle()
+	fmt.Println(len(deck))
+	fmt.Println(deck[0])
+	fmt.Println(deck[len(deck)-1])
 }
