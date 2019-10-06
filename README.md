@@ -7,6 +7,4 @@
 
 ## Notes
 
-* Range Syntax
-  * slice[startIndexIncluding:upToNotIncluding]
-* 
+![Reference vs Value](referenceVsValue.png)

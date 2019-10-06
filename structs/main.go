@@ -12,26 +12,51 @@ type person struct {
 	lastName  string
 	age       int
 	married   bool
-	contact   contactInfo
+	contactInfo
 }
 
-type business struct {
-	name     string
-	industry string
-	contact  contactInfo
-}
+/*
+	Turn an address into a value with *address
+	Turn a value into an address with %value
+*/
 
 func main() {
-	cpustejovsky := person{firstName: "Charles", lastName: "Pustejovsky", age: 26, married: true}
-	cpustejovsky.contact.email = "charles.pustejovsky@gmail.com"
-	cpustejovsky.contact.zip = 30004
-	fmt.Printf("%+v\n", cpustejovsky)
-	var catherine person
-	catherine.firstName = "Catherine"
-	catherine.lastName = "Pustejovsky"
-	catherine.age = 24
-	catherine.married = true
-	fmt.Printf("%+v\n", catherine)
-	bitpay := business{name: "BitPay", industry: "Payment Processing", contact: contactInfo{email: "info@bitpay.com", zip: 30009}}
-	fmt.Println(bitpay)
+	cpustejovsky := person{firstName: "Chas", lastName: "Pustejovsky", age: 26, married: true}
+	cpustejovsky.contactInfo.email = "charles.pustejovsky@gmail.com"
+	cpustejovsky.contactInfo.zip = 30004
+	/*
+	   "&variable" operator:
+	   gives the memory address of the value the variable is pointing at
+	*/
+	cpustejovskyPointer := &cpustejovsky
+	cpustejovsky.print()
+	cpustejovskyPointer.updateName("Chazz")
+	cpustejovsky.print()
+	cpustejovsky.simpleUpdateName("Charles")
+	cpustejovsky.print()
+
+}
+
+/*
+	*person provides a type description:
+	This means we're working with a pointer to a person type
+*/
+func (pointerToPerson *person) updateName(newFirstName string) {
+	/*
+		This is an operator:
+		it means we want to manipulate the value the pointer is referencing
+	*/
+	(*pointerToPerson).firstName = newFirstName
+}
+
+func (pointerToPerson person) print() {
+	fmt.Printf("%+v\n", pointerToPerson)
+}
+
+/*
+	You don't need to massage pointer out of person with "&variable"
+	Here is the syntatic sugar
+ */
+func (pointerToPerson *person) simpleUpdateName(newFirstName string) {
+	(pointerToPerson).firstName = newFirstName
 }

@@ -1,18 +1,26 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
-	nums := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-	for _, num := range nums {
-		if num == 0 {
-			fmt.Printf("%v is zero\n", num)
-		}
-		if num%2 == 0 && num != 0 {
-			fmt.Printf("%v is even\n", num)
-		}
-		if num%2 == 1 {
-			fmt.Printf("%v is odd\n", num)
-		}
-	}
+	mySlice := []string{"Hi", "there", "how", "are", "you"}
+	fmt.Println(mySlice)
+	updateSlice(mySlice)
+	fmt.Println(mySlice)
+
+	myString := "Test"
+	fmt.Println(myString)
+	updateString(&myString)
+	fmt.Println(myString)
+
+}
+
+func updateSlice(s []string) {
+	s[0] = "Howdy"
+}
+
+func updateString(s *string) {
+	*s = "Testing complete"
 }
