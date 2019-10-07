@@ -1,19 +1,20 @@
+// Implement Pic. It should return a slice of length dy, each element of which is a slice of dx 8-bit unsigned integers.
+// When you run the program, it will display your picture, interpreting the integers as grayscale (well, bluescale) values.
+// The choice of image is up to you. Interesting functions include (x+y)/2, x*y, and x^y.
+// (You need to use a loop to allocate each []uint8 inside the [][]uint8.)
+// (Use uint8(intValue) to convert between types.)
+
 package main
 
-import "fmt"
+import "golang.org/x/tour/pic"
 
 func main() {
-	name := "bill"
-
-	namePointer := &name
-
-	fmt.Println(&namePointer)
-	printPointer(namePointer)
+	pic.Show(Pic)
 }
 
-func printPointer(namePointer *string) {
-	fmt.Println(namePointer)
-
-	fmt.Println(&namePointer)
-
+func Pic(dx, dy int) [][]uint8 {
+	sliceSlice := [][]uint8{
+		[]uint8{uint8(dx), uint8(dy)},
+	}
+	return sliceSlice
 }
