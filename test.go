@@ -1,26 +1,19 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func main() {
-	mySlice := []string{"Hi", "there", "how", "are", "you"}
-	fmt.Println(mySlice)
-	updateSlice(mySlice)
-	fmt.Println(mySlice)
+	name := "bill"
 
-	myString := "Test"
-	fmt.Println(myString)
-	updateString(&myString)
-	fmt.Println(myString)
+	namePointer := &name
 
+	fmt.Println(&namePointer)
+	printPointer(namePointer)
 }
 
-func updateSlice(s []string) {
-	s[0] = "Howdy"
-}
+func printPointer(namePointer *string) {
+	fmt.Println(namePointer)
 
-func updateString(s *string) {
-	*s = "Testing complete"
+	fmt.Println(&namePointer)
+
 }

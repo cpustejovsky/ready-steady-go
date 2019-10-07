@@ -8,3 +8,8 @@
 ## Notes
 
 ![Reference vs Value](referenceVsValue.png)
+
+### Maps
+* What are maps?
+  * keys and values are statically typed
+  * 
