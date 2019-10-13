@@ -2,8 +2,11 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"os"
 )
+
+type logWriter struct{}
 
 func main() {
 	argv := os.Args[1]
@@ -12,8 +15,14 @@ func main() {
 		fmt.Printf("Got a nil\n here's the error:\n%v", err)
 		os.Exit(1)
 	}
-	data := make([]byte, 32*1024)
-	count, err := file.Read(data)
-	fmt.Print(string(data[:count]))
 
+	lw := logWriter{}
+
+	io.Copy(lw, file)
+}
+
+func (logWriter) Write(bs []byte) (int, error) {
+	fmt.Println(string(bs))
+	fmt.Printf("Just wrote this many bytes: %v\n", len(bs))
+	return len(bs), nil
 }
