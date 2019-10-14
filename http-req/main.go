@@ -10,6 +10,7 @@ import (
 func main() {
 	data := httpFetcher("https://www.cpustejovsky.com")
 	fmt.Printf("%s", data)
+	saveToFile("test.html", data)
 }
 
 func httpFetcher(url string) []byte {
@@ -21,4 +22,8 @@ func httpFetcher(url string) []byte {
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	return body
+}
+
+func saveToFile(filename string, data []byte) error {
+	return ioutil.WriteFile(filename, data, 0666)
 }
