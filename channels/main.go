@@ -21,24 +21,23 @@ func main() {
 		go checkLink(link, c)
 	}
 
-	for i := 0; i < len(links); i++ {
-		fmt.Println(<-c)
+	for l := range c {
+		go checkLink(l, c)
 	}
 
-	fmt.Println("all done!")
 }
 
 func checkLink(link string, c chan string) {
 	resp, err := http.Get(link)
 	if err != nil {
 		fmt.Printf("There's an error:\n%v", err)
-		c <- "Error Occurred"
+		c <- link
 	}
 	if resp.StatusCode == 200 {
 		fmt.Printf("%v is working.\nStatus Code %v\n", link, resp.StatusCode)
-		c <- "should be working"
+		c <- link
 	} else {
 		fmt.Printf("%v is not working.\nStatus Code: %v\n", link, resp.StatusCode)
-		c <- "should NOT be working"
+		c <- link
 	}
 }
