@@ -9,9 +9,11 @@ func spacer() {
 }
 
 func main() {
-	deck := newDeckFromFile("test")
-	// deck.shuffle()
+	//deck := newDeckFromFile("test")
+	deck := newDeck()
+	deck.shuffle()
 	fmt.Println(len(deck))
-	fmt.Println(deck[0])
-	fmt.Println(deck[len(deck)-1])
+	fmt.Println(deck)
+	//fmt.Println(deck[0])
+	//fmt.Println(deck[len(deck)-1])
 }

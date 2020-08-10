@@ -21,12 +21,14 @@ type person struct {
 */
 
 func main() {
-	cpustejovsky := person{firstName: "Chas", lastName: "Pustejovsky", age: 26, married: true}
+	cpustejovsky := person{firstName: "Chas", lastName: "Pustejovsky", age: 27, married: true}
 	cpustejovsky.contactInfo.email = "charles.pustejovsky@gmail.com"
 	cpustejovsky.contactInfo.zip = 30004
+
+	catherine := person{firstName: "Catherine", lastName: "Pustejovsky", age: 25, married: true}
 	/*
-	   "&variable" operator:
-	   gives the memory address of the value the variable is pointing at
+	  "&variable" operator:
+	  gives the memory address of the value the variable is pointing at
 	*/
 	cpustejovskyPointer := &cpustejovsky
 	cpustejovsky.print()
@@ -34,7 +36,7 @@ func main() {
 	cpustejovsky.print()
 	cpustejovsky.simpleUpdateName("Charles")
 	cpustejovsky.print()
-
+	catherine.print()
 }
 
 /*
@@ -56,7 +58,7 @@ func (pointerToPerson person) print() {
 /*
 	You don't need to massage pointer out of person with "&variable"
 	Here is the syntatic sugar
- */
+*/
 func (pointerToPerson *person) simpleUpdateName(newFirstName string) {
 	(pointerToPerson).firstName = newFirstName
 }

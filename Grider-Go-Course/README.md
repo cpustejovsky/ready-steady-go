@@ -1,12 +1,36 @@
 # ARE YOU READY?
 
 ## Why Go?
-* I believe Go will, well, go far. 
-* I also believe my instincts and preferences are likey mesh well with Golang.
-* As a result, I've decided to start learning it. I'll be building projects in Go soon, but this will be my playground.
+* It's **going** places!
+* I really jive and mesh with Golang's design philosophy
 
 ## Notes
+* no while loops, just for loops
+* switch statements don't need `break` statements! w00t! (break statements already included)
+* pointer syntax!
+  * Turn an address into a value with *address
+	* Turn a value into an address with %value
+  * example (from Tour of Go)
+    ```golang
+    func main() {
+      i, j := 42, 2701
 
+      p := &i         // point to i
+      fmt.Println(*p) // read i through the pointer
+      *p = 21         // set i through the pointer
+      fmt.Println(i)  // see the new value of i
+
+      p = &j         // point to j
+      *p = *p / 37   // divide j through the pointer
+      fmt.Println(j) // see the new value of j
+    }
+      ```
+* arrays have fixed lengths;
+* use slices for dynamic arrays
+* maps are **kind of** like JavaScript objects
+* 
+
+### Reference vs Value
 ![Reference vs Value](referenceVsValue.png)
 
 ### Maps
