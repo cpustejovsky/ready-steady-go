@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -11,18 +10,18 @@ import (
 type logWriter struct{}
 
 func main() {
-	resp, err := http.Get("https://www.cpustejovsky.com")
-	if err != nil {
-		fmt.Printf("Got a nil\n here's the error:\n%v", err)
-		os.Exit(1)
-	}
+	// resp, err := http.Get("https://www.cpustejovsky.com")
+	// if err != nil {
+	// 	fmt.Printf("Got a nil\n here's the error:\n%v", err)
+	// 	os.Exit(1)
+	// }
 
-	lw := logWriter{}
+	// lw := logWriter{}
 
-	io.Copy(lw, resp.Body)
+	// io.Copy(lw, resp.Body)
 
-	// data := httpFetcher("https://www.cpustejovsky.com")
-	// fmt.Printf("%s", data)
+	data := httpFetcher("https://www.cpustejovsky.com")
+	saveToFile("test.html", data)
 }
 
 func (logWriter) Write(bs []byte) (int, error) {
@@ -35,13 +34,13 @@ func saveToFile(filename string, data []byte) error {
 	return ioutil.WriteFile(filename, data, 0666)
 }
 
-// func httpFetcher(url string) []byte {
-// 	resp, err := http.Get(url)
-// 	if err != nil {
-// 		fmt.Printf("Got a nil\n here's the error:\n%v", err)
-// 		os.Exit(1)
-// 	}
-// 	defer resp.Body.Close()
-// 	body, err := ioutil.ReadAll(resp.Body)
-// 	return body
-// }
+func httpFetcher(url string) []byte {
+	resp, err := http.Get(url)
+	if err != nil {
+		fmt.Printf("Got a nil\n here's the error:\n%v", err)
+		os.Exit(1)
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	return body
+}
