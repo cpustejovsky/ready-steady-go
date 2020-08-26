@@ -1,3 +1,4 @@
+github.com/cpustejovsky/ready-steady-go/TDD v0.0.0-20200826003114-669b609e7357 h1:modOSnt5l7VhubA8g0ysqXA7R9RKWWH8O3S2Nn9UWDs=
 github.com/kisielk/errcheck v1.4.0 h1:ueN6QYA+c7eDQo7ebpNdYR8mUJZThiGz9PEoJEMGPzA=
 github.com/kisielk/errcheck v1.4.0/go.mod h1:pFxgyoBC7bSaBwPgfKdkLd5X25qrDl4LWUI2bnpBCr8=
 github.com/yuin/goldmark v1.1.27/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
