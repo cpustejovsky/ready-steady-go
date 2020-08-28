@@ -31,3 +31,4 @@ func ping(url string) chan struct{} {
 	}()
 	return ch
 }
+ 
