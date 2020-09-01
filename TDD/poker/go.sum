@@ -1,0 +1,4 @@
+github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
+github.com/gorilla/websocket v1.4.2/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
+github.com/quii/learn-go-with-tests v0.0.0-20200706072622-24b7b9a3fa95 h1:SY+XkVbFO7T3tKezUi5gwQqGUkOGc+lq3yS8U+vot78=
+github.com/quii/learn-go-with-tests v0.0.0-20200706072622-24b7b9a3fa95/go.mod h1:z+fI4klXdprhwnK63D6r41lKmD57Ets0anztNmN627c=
