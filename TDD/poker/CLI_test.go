@@ -2,7 +2,6 @@ package poker_test
 
 import (
 	"bytes"
-	"fmt"
 	"strings"
 	"testing"
 	"time"
@@ -20,7 +19,7 @@ func TestCLI(t *testing.T) {
 	t.Run("record chris win from user input", func(t *testing.T) {
 		in := strings.NewReader("5\nChris wins\n")
 		playerStore := &poker.StubPlayerStore{}
-		game := &poker.GameSpy{}
+		game := poker.NewTexasHoldem(blindAlerter, dummyPlayerStore)
 		cli := poker.NewCLI(in, dummyStdOut, game)
 		cli.PlayPoker()
 
@@ -30,7 +29,7 @@ func TestCLI(t *testing.T) {
 	t.Run("record cleo win from user input", func(t *testing.T) {
 		in := strings.NewReader("5\nCleo wins\n")
 		playerStore := &poker.StubPlayerStore{}
-		game := &poker.GameSpy{}
+		game := poker.NewTexasHoldem(blindAlerter, dummyPlayerStore)
 		cli := poker.NewCLI(in, dummyStdOut, game)
 		cli.PlayPoker()
 
@@ -38,12 +37,10 @@ func TestCLI(t *testing.T) {
 	})
 
 	t.Run("it schedules printing of blind values", func(t *testing.T) {
-		in := strings.NewReader("5\nChris wins\n")
-		// playerStore := &poker.StubPlayerStore{}
 		blindAlerter := &poker.SpyBlindAlerter{}
-		game := &poker.GameSpy{}
-		cli := poker.NewCLI(in, dummyStdOut, game)
-		cli.PlayPoker()
+		game := poker.NewTexasHoldem(blindAlerter, dummyPlayerStore)
+
+		game.Start(5)
 
 		cases := []poker.ScheduledAlert{
 			{0 * time.Second, 100},
@@ -59,17 +56,7 @@ func TestCLI(t *testing.T) {
 			{100 * time.Minute, 8000},
 		}
 
-		for i, want := range cases {
-			t.Run(fmt.Sprint(want), func(t *testing.T) {
-
-				if len(blindAlerter.Alerts) <= i {
-					t.Fatalf("alert %d was not scheduled %v", i, blindAlerter.Alerts)
-				}
-
-				got := blindAlerter.Alerts[i]
-				assertScheduledAlert(t, got, want)
-			})
-		}
+		checkSchedulingCases(cases, t, blindAlerter)
 	})
 
 	t.Run("it prompts the user to enter the number of players", func(t *testing.T) {

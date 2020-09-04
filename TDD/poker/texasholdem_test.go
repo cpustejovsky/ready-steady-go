@@ -34,7 +34,7 @@ func TestGame_Start(t *testing.T) {
 
 	t.Run("schedules alerts on game start for 7 players", func(t *testing.T) {
 		blindAlerter := &poker.SpyBlindAlerter{}
-		game := &poker.GameSpy{}
+		game := poker.NewTexasHoldem(blindAlerter, dummyPlayerStore)
 
 		game.Start(7)
 
