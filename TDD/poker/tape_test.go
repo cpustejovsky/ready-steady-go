@@ -3,11 +3,10 @@ package poker
 import (
 	"io/ioutil"
 	"testing"
-	
 )
 
 func TestTape_Write(t *testing.T) {
-	file, clean := CreateTempFile(t, "12345")
+	file, clean := createTempFile(t, "12345")
 	defer clean()
 
 	tape := &tape{file}

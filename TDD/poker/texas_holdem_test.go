@@ -2,10 +2,9 @@ package poker_test
 
 import (
 	"fmt"
+	"github.com/cpustejovsky/ready-steady-go/TDD/poker"
 	"testing"
 	"time"
-
-	"github.com/cpustejovsky/ready-steady-go/TDD/poker"
 )
 
 func TestGame_Start(t *testing.T) {
@@ -52,7 +51,7 @@ func TestGame_Start(t *testing.T) {
 
 func TestGame_Finish(t *testing.T) {
 	store := &poker.StubPlayerStore{}
-	game := &poker.GameSpy{}
+	game := poker.NewTexasHoldem(dummyBlindAlerter, store)
 	winner := "Ruth"
 
 	game.Finish(winner)

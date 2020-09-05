@@ -1,10 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
-	"github.com/cpustejovsky/ready-steady-go/TDD/poker"
+	poker "github.com/cpustejovsky/ready-steady-go/TDD/poker"
 )
 
 const dbFileName = "game.db.json"
@@ -17,7 +18,10 @@ func main() {
 	}
 	defer close()
 
-	game := poker.NewGame(poker.BlindAlerterFunc(poker.StdOutAlerter), store)
+	game := poker.NewTexasHoldem(poker.BlindAlerterFunc(poker.StdOutAlerter), store)
 	cli := poker.NewCLI(os.Stdin, os.Stdout, game)
+
+	fmt.Println("Let's play poker")
+	fmt.Println("Type {Name} wins to record a win")
 	cli.PlayPoker()
 }
