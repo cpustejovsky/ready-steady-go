@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/quii/learn-go-with-tests/command-line/v3"
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/cpustejovsky/ready-steady-go/TDD/poker"
 )
 
 const dbFileName = "game.db.json"
