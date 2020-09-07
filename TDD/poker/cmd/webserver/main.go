@@ -23,10 +23,12 @@ func main() {
 		log.Fatalf("problem creating file system player store, %v ", err)
 	}
 
-	server, err := poker.NewPlayerServer(store)
+	game := poker.NewTexasHoldem(poker.BlindAlerterFunc(poker.Alerter), store)
+
+	server, err := poker.NewPlayerServer(store, game)
 
 	if err != nil {
-		log.Fatalf("Error starting server\n%v", err)
+		log.Fatalf("problem creating player server %v", err)
 	}
 
 	if err := http.ListenAndServe(":5000", server); err != nil {
