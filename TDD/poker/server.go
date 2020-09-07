@@ -41,7 +41,7 @@ func NewPlayerServer(store PlayerStore, game Game) (*PlayerServer, error) {
 	tmpl, err := template.ParseFiles(htmlTemplatePath)
 
 	if err != nil {
-		return nil, fmt.Errorf("problem loading template %s %v", htmlTemplatePath, err)
+		return nil, fmt.Errorf("problem opening %s %v", htmlTemplatePath, err)
 	}
 
 	p.game = game
