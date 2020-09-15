@@ -6,7 +6,12 @@ import (
 	"os"
 )
 
-type counts map[string]int
+type dups struct {
+	count     int
+	locations []string
+}
+
+type counts map[string]dups
 
 func main() {
 	counts := make(counts)
@@ -23,18 +28,32 @@ func main() {
 			countLines(f, counts)
 			f.Close()
 		}
-		for line, n := range counts {
-			if n > 1 {
-				fmt.Printf("%d\t%s\n", n, line)
+		for line, dups := range counts {
+			if dups.count > 1 {
+				fmt.Printf("%s found %d times in the following files:\t %v\n", line, dups.count, dups.locations)
 			}
 		}
 	}
 }
 
+//TODO: come up with a better way than this copying system
 func countLines(f *os.File, counts counts) {
-	f.Name()
 	input := bufio.NewScanner(f)
 	for input.Scan() {
-		counts[input.Text()]++
+		c := counts[input.Text()]
+		if !includes(c.locations, f.Name()) {
+			c.locations = append(c.locations, f.Name())
+		}
+		c.count++
+		counts[input.Text()] = c
 	}
+}
+
+func includes(array []string, str string) bool {
+	for _, value := range array {
+		if value == str {
+			return true
+		}
+	}
+	return false
 }
