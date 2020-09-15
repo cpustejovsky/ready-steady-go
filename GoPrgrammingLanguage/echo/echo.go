@@ -12,7 +12,7 @@ func echo1() {
 		s += sep + os.Args[i]
 		sep = " "
 	}
-	fmt.Println(s)
+	// fmt.Println(s)
 }
 
 func echo2() {
@@ -21,24 +21,27 @@ func echo2() {
 		s += sep + arg
 		sep = " "
 	}
-	fmt.Println(s)
+	// fmt.Println(s)
 }
 
 func echo3() {
-	fmt.Println(strings.Join(os.Args[1:], " "))
+	strings.Join(os.Args[1:], " ")
+	// fmt.Println(strings.Join(os.Args[1:], " "))
 }
 
 func customEcho() {
-	var s string
-	fmt.Println(os.Args[0])
+	// var s string
+	var r []string
+	// fmt.Println(os.Args[0])
 	for i, arg := range os.Args[1:] {
-		s += fmt.Sprintf("index %d) %v\n", i, arg)
+		// s += fmt.Sprintf("index %d) %v\n", i, arg)
+		r = append(r, fmt.Sprintf("index %d) %v\n", i, arg))
 	}
-	fmt.Println(s)
+	// fmt.Println(s)
 }
 func main() {
 	echo1()
 	echo2()
 	echo3()
-	// customEcho()
+	customEcho()
 }
