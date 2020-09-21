@@ -18,6 +18,7 @@ func main() {
 			fmt.Fprintf(os.Stderr, "fetch: %v\n", err)
 		}
 		io.Copy(os.Stdout, resp.Body)
+		fmt.Println(resp.Status)
 		resp.Body.Close()
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "fetch: reading %sL %v\n", url, err)
