@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 
-	"github.com/cpustejovsky/ready-steady-go/tree/master/GoPrgrammingLanguage/ch2/tempconv"
+	"github.com/cpustejovsky/ready-steady-go/tree/master/GoPrgrammingLanguage/ch2/conv"
 )
 
 func main() {
-	fmt.Printf("Brrrr!	%v\n", tempconv.AbsoluteZeroC)
-	fmt.Println(tempconv.CToF(tempconv.BoilingC))
-	fmt.Println(tempconv.CToK(tempconv.BoilingC))
+	fmt.Printf("Brrrr!	%v\n", conv.AbsoluteZeroC)
+	fmt.Println(conv.CToF(conv.BoilingC))
+	fmt.Println(conv.CToK(conv.BoilingC))
 }

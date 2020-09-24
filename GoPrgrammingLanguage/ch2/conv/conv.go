@@ -1,4 +1,4 @@
-package tempconv
+package conv
 
 // CToF converts a Celsius temperature to Fahrenheit
 func CToF(c Celsius) Fahrenheit {
