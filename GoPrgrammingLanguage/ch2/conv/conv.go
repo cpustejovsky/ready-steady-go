@@ -17,3 +17,11 @@ func CToK(c Celsius) Kelvin {
 func KToC(k Kelvin) Celsius {
 	return Celsius(k + 273.15)
 }
+
+func FtToM(f Foot) Meter {
+	return Meter(f * .3048)
+}
+
+func MToFt(m Meter) Foot {
+	return Foot(m / .3048)
+}
