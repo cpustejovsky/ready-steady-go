@@ -4,13 +4,30 @@ import (
 	"testing"
 )
 
-func TestPopCount(t *testing.T) {
-	for i := 0; i < 256; i++ {
-		got := TablePopCount(uint64(i))
-		want := PopCount(uint64(i))
+var tests = []struct {
+	x    uint64
+	want int
+}{
+	{0, 0},
+	{1, 1},
+	{1 << 8, 1},
+	{1<<8 + 1, 2},
+	{1<<8 - 1, 8},
+	{1<<64 - 1, 64},
+}
 
-		if got != want {
-			t.Errorf("got %v, wanted %v", got, want)
+func TestPopCount(t *testing.T) {
+	for _, test := range tests {
+		if got := PopCount(test.x); got != test.want {
+			t.Errorf("BitShiftPopCount(%d) = %d, want %d", test.x, got, test.want)
+		}
+	}
+}
+
+func TestTablePopCount(t *testing.T) {
+	for _, test := range tests {
+		if got := TablePopCount(test.x); got != test.want {
+			t.Errorf("TablePopCount(%d) = %d, want %d", test.x, got, test.want)
 		}
 	}
 }

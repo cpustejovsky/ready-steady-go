@@ -2,12 +2,11 @@ package main
 
 import (
 	"fmt"
-
-	"github.com/cpustejovsky/ready-steady-go/tree/master/GoPrgrammingLanguage/ch2/popcount"
 )
 
 func main() {
-	// popcount.PC()
-	fmt.Println(popcount.TablePopCount(1))
-	fmt.Println(popcount.PopCount(20))
+	fmt.Println(64 >> 6)
+	fmt.Println(2 << 10)
+	fmt.Println(2 >> 3)
+	fmt.Println(2 >> 4)
 }
