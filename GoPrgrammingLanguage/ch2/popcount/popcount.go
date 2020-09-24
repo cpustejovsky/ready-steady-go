@@ -39,3 +39,12 @@ func PopCount(x uint64) int {
 	}
 	return count
 }
+
+func PopCountBitWiseAnd(x uint64) int {
+	count := 0
+	for x != 0 {
+		x = x & (x - 1)
+		count++
+	}
+	return count
+}

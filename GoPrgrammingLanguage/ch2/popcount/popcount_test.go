@@ -32,6 +32,14 @@ func TestTablePopCount(t *testing.T) {
 	}
 }
 
+func TestPopCountBitWiseAnd(t *testing.T) {
+	for _, test := range tests {
+		if got := PopCountBitWiseAnd(test.x); got != test.want {
+			t.Errorf("PopCountBitWiseAnd(%d) = %d, want %d", test.x, got, test.want)
+		}
+	}
+}
+
 func BenchmarkTablePopCount(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		TablePopCount(uint64(i))
