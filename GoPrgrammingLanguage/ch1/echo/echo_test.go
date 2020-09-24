@@ -1,4 +1,3 @@
-// TODO: Implement Benchmark Testing for Echo Programming
 package main
 
 import (
