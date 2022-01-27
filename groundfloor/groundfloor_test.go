@@ -1,7 +1,7 @@
 package groundfloor_test
 
 import (
-	"runtime"
+	"sync"
 	"testing"
 	"time"
 
@@ -34,42 +34,59 @@ func TestWithdraw(t *testing.T) {
 
 }
 
+var deposits = []int{100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100}
+var withdrawals = []int{100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100}
+
 func TestConcurrentDepositWithDraw(t *testing.T) {
 	ba := groundfloor.BankAccount{
 		Balance: 0,
 	}
-	g := runtime.GOMAXPROCS(0)
-	d := make(chan int, g)
-	w := make(chan int, g)
-	deposits := []int{100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100}
-	withdrawals := []int{100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100} // go func() {
 
-		go func() {
-		defer close(d)
-		for _, deposit := range deposits {
-			d <- deposit
-		}
-	}()
+	var wg sync.WaitGroup
 
-	go func() {
-		defer close(w)
-		for _, withdrawal := range withdrawals {
-			w <- withdrawal
-		}
-	}()
-
-	for desposit := range d {
-		
-	}
 	for _, d := range deposits {
-		go ba.Deposit(d)
+		wg.Add(1)
+		go func(d int) {
+			defer wg.Done()
+			ba.Deposit(d)
+		}(d)
 	}
 	for _, w := range withdrawals {
-		go ba.Withdraw(w)
+		wg.Add(1)
+		go func(w int) {
+			defer wg.Done()
+			ba.Withdraw(w)
+		}(w)
 	}
-	time.Sleep(5 * time.Second)
+
+	wg.Wait()
+
 	got := ba.Balance
 	want := 100
+	if got != want {
+		t.Errorf("got: %v, want: %v", got, want)
+	}
+}
+
+func TestConcurrentDepositWithDrawV2(t *testing.T) {
+	ba := groundfloor.BankAccountV2{
+		Balance: 0,
+	}
+
+	for _, d := range deposits {
+		go func(d int64) {
+			ba.Deposit(d)
+		}(int64(d))
+	}
+	for _, w := range withdrawals {
+		go func(w int64) {
+			ba.Withdraw(w)
+		}(int64(w))
+	}
+	time.Sleep(1 * time.Second)
+
+	got := ba.Balance
+	var want int64 = 100
 	if got != want {
 		t.Errorf("got: %v, want: %v", got, want)
 	}
