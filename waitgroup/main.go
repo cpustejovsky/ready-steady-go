@@ -5,7 +5,7 @@ import (
 	"sync"
 )
 
-func main() {
+func waitGroup() {
 	begin := make(chan int)
 	var wg sync.WaitGroup
 	for i := 0; i < 5; i++ {
@@ -20,4 +20,18 @@ func main() {
 	fmt.Println("Unblocking goroutines...")
 	close(begin)
 	wg.Wait()
+}
+
+func JustChannels() {
+	begin := make(chan int)
+	go func() {
+		defer close(begin)
+		for i := 0; i < 5; i++ {
+			fmt.Printf("%v has begun\n", i)
+			begin <- i
+		}
+	}()
+	for v := range begin {
+		fmt.Printf("%v has ended\n", v)
+	}
 }
