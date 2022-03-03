@@ -14,6 +14,11 @@ they math the ones in the index file.
   non-zero value
 
 Get taxi.zip from the web site and open it. The index file is sha256sum.txt
+
+Bonus:
+- Used a fixed pool of n goroutines (say 5)
+- Make sure to tell the worker there's no more work
+- Tell workers to terminate once there's an error
 */
 package main
 
@@ -69,8 +74,24 @@ func parseSigFile(r io.Reader) (map[string]string, error) {
 	return sigs, nil
 }
 
+type result struct {
+	fileName string
+	err      error
+	match    bool
+}
+
+func sigWorker(fileName string, expected string) result {
+	r := result{
+		fileName: fileName,
+	}
+	sig, err := fileSig(fileName)
+	r.err = err
+	r.match = sig == expected
+	return r
+}
+
 func main() {
-	rootDir := "taxi"
+	rootDir := "./taxi"
 	file, err := os.Open(path.Join(rootDir, "sha256sum.txt"))
 	if err != nil {
 		log.Fatalf("error: %s", err)
@@ -83,32 +104,38 @@ func main() {
 	}
 
 	start := time.Now()
-	type foobar struct {
-		signature string
-		fileSig   string
-		fileName  string
-	}
+	ch := make(chan result)
 	g := runtime.GOMAXPROCS(0)
-	c := make(chan foobar, g)
+	sem := make(chan bool, g)
+	ok := true
 	for name, signature := range sigs {
-		go func(name, signature string) {
-			fileName := path.Join(rootDir, name) + ".bz2"
-			sig, err := fileSig(fileName)
-			if err != nil {
-				fmt.Fprintf(os.Stderr, "error: %s\n", err)
-				return
+		fileName := path.Join(rootDir, name) + ".bz2"
+		go func(f string, s string) {
+			sem <- true
+			{
+				ch <- sigWorker(f, s)
 			}
-			c <- foobar{signature: signature, fileName: fileName, fileSig: sig}
-		}(name, signature)
+			<-sem
+		}(fileName, signature)
 	}
+
 	for range sigs {
-		v := <-c
-		if v.signature != v.fileSig {
-			fmt.Printf("%s: mismatch\n", v.fileName)
+		r := <-ch
+		if r.err != nil {
+			fmt.Fprintf(os.Stderr, "error: %s - %s\n", r.fileName, r.err)
+			ok = false
+			continue
+		}
+
+		if !r.match {
+			ok = false
+			fmt.Printf("%s: mismatch\n", r.fileName)
 		}
 	}
 
 	duration := time.Since(start)
 	fmt.Printf("processed %d files in %v\n", len(sigs), duration)
-
+	if !ok {
+		os.Exit(1)
+	}
 }

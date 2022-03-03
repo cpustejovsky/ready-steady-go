@@ -37,4 +37,4 @@ func sleepSort(values []int) []int {
 
 //I-O bound vs CPU bound
 //spinning more goroutines helps for IO (see scheduling blog)
-//
+//more processors for CPU bound? TODO: find out!
