@@ -111,7 +111,6 @@ func main() {
 	g := runtime.GOMAXPROCS(0)
 	//creates a buffered channel that will block when the buffer is full
 	sem := make(chan struct{}, g)
-	ok := true
 	for name, signature := range sigs {
 		fileName := path.Join(rootDir, name) + ".bz2"
 		//sem is helping us create a semaphore pattern to only allow g workers at a time where g is the number of cores on our machine
@@ -129,19 +128,31 @@ func main() {
 		r := <-ch
 		if r.err != nil {
 			fmt.Fprintf(os.Stderr, "error: %s - %s\n", r.fileName, r.err)
-			ok = false
 			continue
 		}
 
 		if !r.match {
-			ok = false
 			fmt.Printf("%s: mismatch\n", r.fileName)
 		}
 	}
 
 	duration := time.Since(start)
-	fmt.Printf("processed %d files in %v\n", len(sigs), duration)
-	if !ok {
-		os.Exit(1)
+	fmt.Printf("concurrently processed %d files in %v\n", len(sigs), duration)
+
+	start2 := time.Now()
+	for name, signature := range sigs {
+		fileName := path.Join(rootDir, name) + ".bz2"
+		result := sigWorker(fileName, signature)
+		if result.err != nil {
+			fmt.Fprintf(os.Stderr, "error: %s - %s\n", result.fileName, result.err)
+			os.Exit(1)
+		}
+		if !result.match {
+			fmt.Printf("%s: mismatch\n", result.fileName)
+		}
 	}
+
+	duration2 := time.Since(start2)
+	fmt.Printf("sequentially processed %d files in %v\n", len(sigs), duration2)
+
 }
