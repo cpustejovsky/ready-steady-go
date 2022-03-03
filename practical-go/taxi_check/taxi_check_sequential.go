@@ -31,7 +31,6 @@ import (
 	"log"
 	"os"
 	"path"
-	"runtime"
 	"strings"
 	"time"
 )
@@ -106,42 +105,18 @@ func main() {
 
 	start := time.Now()
 
-	ch := make(chan result)
-	//this is how you determine your processes in Go
-	g := runtime.GOMAXPROCS(0)
-	//creates a buffered channel that will block when the buffer is full
-	sem := make(chan struct{}, g)
-	ok := true
 	for name, signature := range sigs {
 		fileName := path.Join(rootDir, name) + ".bz2"
-		//sem is helping us create a semaphore pattern to only allow g workers at a time where g is the number of cores on our machine
-		go func(f string, s string) {
-			//sem receives value
-			sem <- struct{}{}
-			// work is done and sent to result channel
-			ch <- sigWorker(f, s)
-			// sem sends value, freeing up space so another value can be received and more work can continue
-			<-sem
-		}(fileName, signature)
-	}
-
-	for range sigs {
-		r := <-ch
-		if r.err != nil {
-			fmt.Fprintf(os.Stderr, "error: %s - %s\n", r.fileName, r.err)
-			ok = false
-			continue
+		result := sigWorker(fileName, signature)
+		if result.err != nil {
+			fmt.Fprintf(os.Stderr, "error: %s - %s\n", result.fileName, result.err)
+			os.Exit(1)
 		}
-
-		if !r.match {
-			ok = false
-			fmt.Printf("%s: mismatch\n", r.fileName)
+		if !result.match {
+			fmt.Printf("%s: mismatch\n", result.fileName)
 		}
 	}
 
 	duration := time.Since(start)
 	fmt.Printf("processed %d files in %v\n", len(sigs), duration)
-	if !ok {
-		os.Exit(1)
-	}
 }

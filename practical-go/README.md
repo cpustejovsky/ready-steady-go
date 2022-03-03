@@ -15,3 +15,7 @@
 ## Goroutine Code Examples
 - This example shows a bug you want to avoid along with the two ways to fix it: [Example](https://go.dev/play/p/WQMYZ-7xifM)
 - This example shows how to do this with channels: [Example](https://go.dev/play/p/BHVhBD17cJA)
+- This examples shows using channels for synchronization: [Example](https://go.dev/play/p/Nz6vX_x3Sg9)
+- To run taxi_check:
+  - `cd taxi_check/` and run `go run taxi_check_sequential.go` and then `go run taxi_check.go` to see the difference concurrency makes.
+  - Look at the code inside `taxi_check.go` for notes on the semaphore pattern to control how many goroutines we have running at any given time
