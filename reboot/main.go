@@ -9,6 +9,7 @@ type Person struct {
 	Name       string
 	Alive      bool
 	Productive bool
+	InControl  bool
 	Thoughts   []string
 }
 
@@ -23,6 +24,13 @@ func NewPerson(name string) *Person {
 
 func (p *Person) action(task string) {
 	fmt.Println(task)
+}
+
+func (p *Person) Trust() {
+	p.action("recognize limitations")
+	p.action("remember that you will die")
+	p.action("pray to God")
+	p.Reboot()
 }
 
 func (p *Person) Work() error {
@@ -44,10 +52,12 @@ func (p *Person) Reboot() {
 	p.Thoughts = []string{}
 	p.Productive = true
 }
-
 func main() {
 	cpustejovsky := NewPerson("Charles")
 	for cpustejovsky.Alive {
+		if !cpustejovsky.InControl {
+			cpustejovsky.Trust()
+		}
 		err := cpustejovsky.Work()
 		if err != nil && !cpustejovsky.Productive {
 			cpustejovsky.Reboot()
