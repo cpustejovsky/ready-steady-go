@@ -12,28 +12,38 @@ type Circle struct {
 }
 
 type Triangle struct {
-	Base  float64
-	Height float64}
+	Base   float64
+	Height float64
+	Sides  []float64
+}
 
 type Shape interface {
-	// Perimeter() float64
+	Perimeter() float64
 	Area() float64
 }
 
-// func (r *Rectangle) Perimeter() float64 {
-// 	return 2 * (r.Width + r.Height)
-// }
+func (r *Rectangle) Perimeter() float64 {
+	return 2 * (r.Width + r.Height)
+}
 
-// func (c *Circle) Perimeter() float64 {
-// 	return 2 * math.Pi * c.Radius
-// }
+func (c *Circle) Perimeter() float64 {
+	return 2 * math.Pi * c.Radius
+}
+
+func (t *Triangle) Perimeter() float64 {
+	var out float64
+	for _, side := range t.Sides {
+		out += side
+	}
+	return out
+}
 
 func (r *Rectangle) Area() float64 {
 	return r.Width * r.Height
 }
 
 func (t *Triangle) Area() float64 {
-	return (t.Base * t.Height)/2
+	return (t.Base * t.Height) / 2
 }
 
 func (c *Circle) Area() float64 {
