@@ -13,13 +13,18 @@ func main() {
 		log.Println("please provide minutes")
 		os.Exit(1)
 	}
-	minutes, err := strconv.Atoi(os.Args[1])
-	if err != nil {
-		log.Println(err)
-		os.Exit(1)
+	var total float64
+	for _, duration := range os.Args[1:] {
+		m, err := strconv.ParseFloat(duration, 0)
+		if err != nil {
+			log.Println(err)
+			os.Exit(1)
+		}
+		total += m
 	}
-	hours := minutes / 60
-	remainder := minutes - hours*60
-	doneTime := time.Now().Add(time.Minute * time.Duration(minutes))
-	fmt.Printf("the soonest you can finish your To-Dos (%dhr %dmin) is %v\n", hours, remainder, doneTime.Format(time.TimeOnly))
+
+	hours := total / 60
+	doneTime := time.Now().Add(time.Minute * time.Duration(total))
+	fmt.Printf("TODO Time: %.2fhr (%.2fmin) remaining \nSoonest time to finish: %s\n", hours, total,
+		doneTime.Format(time.TimeOnly))
 }
