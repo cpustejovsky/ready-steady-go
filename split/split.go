@@ -1,30 +1,16 @@
 package split
 
+// String takes a string and returns a slice of strings with the length of size
 func String(str string, size int) []string {
-	var parts []string
-	for i := 0; i < len(str); i++ {
-		start := i * size
-		end := start + size
-		if start > len(str) || end > len(str) {
-			break
-		}
-		parts = append(parts, str[start:end])
-	}
-	return parts
-}
-
-// StringUsingRunes takes a string and returns a slice of strings with the length of size
-// This function is significantly slower than using the indexes of the str parameter.
-func StringUsingRunes(str string, size int) []string {
 	var split []string
-	var temp string
+	var temp []rune
 	for _, char := range str {
 		if len(temp) == size {
-			split = append(split, temp)
-			temp = string(char)
+			split = append(split, string(temp))
+			temp = []rune{char}
 		} else {
-			temp += string(char)
+			temp = append(temp, char)
 		}
 	}
-	return split
+	return append(split, string(temp))
 }
