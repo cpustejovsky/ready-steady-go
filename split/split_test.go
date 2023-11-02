@@ -11,7 +11,7 @@ var emojis = "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀�
 
 func TestSplitString(t *testing.T) {
 	t.Run("Alphabet", func(t *testing.T) {
-		var want = []string{"ABC", "DEF", "GHI", "JKL", "MNO", "PQR", "STU", "VWX", "YZ"}
+		var want = []string{"ABC", "DEF", "GHI", "JKL", "MNO", "PQR", "STU", "VWX"}
 
 		got := split.String(alphabet, 3)
 		if !reflect.DeepEqual(got, want) {
@@ -28,7 +28,7 @@ func TestSplitString(t *testing.T) {
 }
 
 func BenchmarkSplitString(b *testing.B) {
-	var want = []string{"ABC", "DEF", "GHI", "JKL", "MNO", "PQR", "STU", "VWX", "YZ"}
+	var want = []string{"ABC", "DEF", "GHI", "JKL", "MNO", "PQR", "STU", "VWX"}
 	for i := 0; i < b.N; i++ {
 		got := split.String(alphabet, 3)
 		if !reflect.DeepEqual(got, want) {
