@@ -2,7 +2,6 @@ package leetcode_test
 
 import (
 	"github.com/cpustejovsky/ready-steady-go/leetcode"
-	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -44,13 +43,19 @@ var tests = []struct {
 func TestConvertToRomanNumeral(t *testing.T) {
 	for _, tt := range tests {
 		got := leetcode.ConvertToRomanNumeral(tt.Arabic)
-		assert.Equal(t, tt.Roman, got)
+		if tt.Roman != got {
+			t.Fatalf("got:\t%v\nwant:\t%v\n", got, tt.Roman)
+
+		}
 	}
 }
 
 func TestConvertToArabic(t *testing.T) {
 	for _, tt := range tests {
 		got := leetcode.RomanToArabic(tt.Roman)
-		assert.Equal(t, tt.Arabic, got)
+		if tt.Arabic != got {
+			t.Fatalf("got:\t%v\nwant:\t%v\n", got, tt.Arabic)
+
+		}
 	}
 }
