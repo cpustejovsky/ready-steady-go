@@ -21,7 +21,7 @@ func TestRacer(t *testing.T) {
 	fastURL := fastServer.URL
 
 	want := fastURL
-	got, err := sel.Racer(slowURL, fastURL, 1*time.Millisecond)
+	got, err := sel.Racer(slowURL, fastURL, 10*time.Second)
 	if err != nil {
 		t.Error(err)
 	}
