@@ -68,6 +68,7 @@ func main() {
 		Used to help with waiting on something.
 		When the data comes in you, close the signal/sync channel
 
+
 	*/
 	sync := make(chan struct{})
 	for i := 0; i < num; i++ {
@@ -84,6 +85,6 @@ func main() {
 	close(sync)
 	time.Sleep(time.Millisecond)
 
-	var nilch chan int
+	//var nilch chan int
 
 }
