@@ -2,7 +2,7 @@ package Ch2
 
 func InsertionSort(arr []int) []int {
 	//loop through array
-	for i := 0; i < len(arr); i++ {
+	for i := 1; i < len(arr); i++ {
 		key := arr[i]
 		//this along with the for while loop are used to test the loop invariant at maintenance
 		j := i - 1
@@ -23,7 +23,7 @@ func InsertionSort(arr []int) []int {
 
 func ReverseInsertionSort(arr []int) []int {
 	//loop through array
-	for i := 0; i < len(arr); i++ {
+	for i := 1; i < len(arr); i++ {
 		key := arr[i]
 		//this along with the for while loop are used to test the loop invariant at maintenance
 		j := i - 1
