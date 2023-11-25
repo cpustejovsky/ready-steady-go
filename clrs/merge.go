@@ -9,9 +9,9 @@ func MergeSort(nums []int, limit int) []int {
 		return SelectionSort(nums)
 	}
 	middle := length / 2
-	l := MergeSort(nums[:middle], limit)
-	r := MergeSort(nums[middle:], limit)
-	return merge(l, r)
+	left := MergeSort(nums[:middle], limit)
+	right := MergeSort(nums[middle:], limit)
+	return merge(left, right)
 }
 
 func merge(left, right []int) []int {

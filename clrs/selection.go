@@ -2,14 +2,13 @@ package clrs
 
 func SelectionSort(nums []int) []int {
 	for i := 0; i < len(nums); i++ {
-		minIdx := i
-		for j := i; j < len(nums); j++ {
-			if nums[j] < nums[minIdx] && j != i {
-				minIdx = j
+		minimumIndex := i
+		for currentIndex := i + 1; currentIndex < len(nums); currentIndex++ {
+			if nums[currentIndex] < nums[minimumIndex] {
+				minimumIndex = currentIndex
 			}
 		}
-		nums[i], nums[minIdx] = nums[minIdx], nums[i]
+		nums[i], nums[minimumIndex] = nums[minimumIndex], nums[i]
 	}
 	return nums
-
 }
