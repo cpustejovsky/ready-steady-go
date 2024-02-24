@@ -11,7 +11,6 @@ func longestCommonPrefix(strings []string) string {
 	}
 	word := strings[0]
 	for i := 1; i < len(strings); i++ {
-
 		for j := 0; j < len(strings[i]); j++ {
 			if j < len(word) {
 				if word[j] == strings[i][j] {

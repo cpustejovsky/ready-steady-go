@@ -24,7 +24,10 @@ func main() {
 	}
 
 	hours := total / 60
-	doneTime := time.Now().Add(time.Minute * time.Duration(total))
-	fmt.Printf("TODO Time: %.2fhr (%.2fmin) remaining \nSoonest time to finish: %s\n", hours, total,
-		doneTime.Format(time.TimeOnly))
+	now := time.Now()
+	doneTime := now.Add(time.Minute * time.Duration(total))
+	endOfday := time.Date(now.Year(), now.Month(), now.Day(), 21, 0, 0, 0, now.Location())
+	freeTime := endOfday.Sub(doneTime)
+	fmt.Printf("TODO Time: %.2fhr (%.2fmin) remaining \nYou have %.2fhr (%.2fmin) of free time\n", hours, total,
+		freeTime.Hours(), freeTime.Minutes())
 }
